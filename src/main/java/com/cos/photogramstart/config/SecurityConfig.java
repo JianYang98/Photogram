@@ -1,0 +1,35 @@
+package com.cos.photogramstart.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@EnableWebSecurity // 해당 파일로 시큐리티 활성화
+@Configuration // IOC
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean // BCryptPasswordEncoder를 빈으로 들고 있음
+    public BCryptPasswordEncoder encoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http)throws Exception{
+//        super.configure(http); // 이게 보안 가로젬 ,
+//        super삭제 - 기존 시큐리티 비활성화
+        http.csrf().disable() ;
+        http.authorizeRequests()
+                .antMatchers("/","/uer/**", "/image/**","/subscribe/**","/comment/**")
+                .authenticated() // 인증이 필요함
+                .anyRequest().permitAll() // 위가 아닌 것은 인증 x
+                .and()
+                .formLogin() // 인증 필요할때는 홈 로그인 할건데 그건 바로 너의 밑 페이지임
+                .loginPage("/auth/signin")
+                .defaultSuccessUrl("/") 
+                ;
+
+    }
+}
