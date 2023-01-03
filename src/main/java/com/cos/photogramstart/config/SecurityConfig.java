@@ -28,6 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin() // 인증 필요할때는 홈 로그인 할건데 그건 바로 너의 밑 페이지임
                 .loginPage("/auth/signin")
+                //GET 인증이 필요하면 GET으로 loginPage로 보내줌
+                .loginProcessingUrl("/auth/signin")
+                // POST으로 /auth/signin으로 요청시 스프링 시큐리티가 로그인 프로세스 진행
                 .defaultSuccessUrl("/") 
                 ;
 
