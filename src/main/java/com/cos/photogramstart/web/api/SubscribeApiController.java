@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SubscribeApiController {
 
     private  final SubscribeService subscribeService ;
+
+    //세션 안 잡히는거 왜인지 찾기
     //구독하기
     @PostMapping("/api/subscribe/{toUserId}") // ~~ 구독하겠다.
     public ResponseEntity<?> subscribe(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int toUserId ){
