@@ -23,11 +23,9 @@ public class SubscribeApiController {
     //세션 안 잡히는거 왜인지 찾기
     //구독하기
     @PostMapping("/api/subscribe/{toUserId}") // ~~ 구독하겠다.
-    public ResponseEntity<?> subscribe(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int toUserId ){
-        log.info( "principalDetails.getUser() :: ", principalDetails.getUser()  );
-        subscribeService.구독하기(principalDetails.getUser().getId() , toUserId) ;
-
-        return  new ResponseEntity<>(new CMRespDto<>(1,"구독성공",null), HttpStatus.OK) ;
+    public ResponseEntity<?> subscribe(@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable int toUserId){
+        subscribeService.구독하기(principalDetails.getUser().getId(), toUserId);
+        return new ResponseEntity<>(new CMRespDto<>(1, "구독하기 성공", null), HttpStatus.OK);
     }
 
     //구독취소하기

@@ -20,8 +20,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http)throws Exception{
 //        super.configure(http); // 이게 보안 가로젬 ,
 //        super삭제 - 기존 시큐리티 비활성화
-        http.csrf().disable() ;
-        http.authorizeRequests()
+        //http.csrf();
+
+        http.csrf().disable()
+            .authorizeRequests()
                 .antMatchers("/","/uer/**"  ,"/image/**","/subscribe/**","/comment/**")
                 .authenticated() // 인증이 필요함
                 .anyRequest().permitAll() // 위가 아닌 것은 인증 x
