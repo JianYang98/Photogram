@@ -22,9 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        super삭제 - 기존 시큐리티 비활성화
         //http.csrf();
 
-        http.csrf().disable()
-            .authorizeRequests()
-                .antMatchers("/","/uer/**"  ,"/image/**","/subscribe/**","/comment/**")
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/","/uer/**"  ,"/image/**","/subscribe/**","/comment/**","/api/**")
                 .authenticated() // 인증이 필요함
                 .anyRequest().permitAll() // 위가 아닌 것은 인증 x
                 .and()

@@ -1,5 +1,6 @@
 package com.cos.photogramstart.handler;
 
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -49,4 +50,12 @@ public class ControllerExceptionHanlder {
 //        return new CMRespDto<>(-1, e.getMessage(),e.getErrorMap());
 //
 //    }
+
+    @ExceptionHandler(CustomApiException.class) // 런타임 입셉션을 예가 다!!! 리턴함
+    public ResponseEntity<?> apiException(CustomApiException e){
+
+        return new ResponseEntity<>( new CMRespDto<>(-1, e.getMessage(),null),HttpStatus.BAD_REQUEST);
+        // AJAX 할때는 ResponseEntity 가 있어야 상태코드가 간다
+        // Body와 상태코드 return , BadRequest 400
+    }
 }

@@ -36,6 +36,13 @@ public class AuthController {
 
         return"auth/signin";
     }
+
+    @PostMapping("/auth/signin")
+    public String signinForm(){
+
+        return"auth/signin";
+    }
+
     @GetMapping("/auth/signup")
     public String signupStringForm(){
 

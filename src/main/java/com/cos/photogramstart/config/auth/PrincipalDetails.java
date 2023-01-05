@@ -12,7 +12,8 @@ public class PrincipalDetails  implements UserDetails {
     private static final long serialVersionUID = 1L;
     private User user ;
     public PrincipalDetails(User user){
-        this.user =user ;
+        this.user =user;
+        System.out.println("princcipalDetail만들어짐");
     }
 
     // 권한 : 한개가 아닐 수 있어서 Collection을 받음 (3개 이상의 권한 가능)
