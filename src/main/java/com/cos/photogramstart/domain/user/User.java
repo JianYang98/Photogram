@@ -2,10 +2,12 @@ package com.cos.photogramstart.domain.user;
 
 //JPA  - JAVA Psersistence API(데이터를 영구적으로 저장 API)
 
+import com.cos.photogramstart.domain.Image.Image;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder // 패턴으로 데이터를 담을 수 있게 해주는 어노테이션
 @AllArgsConstructor // 모든 생성자 자동으로 만들어주는 너도 테이션
@@ -33,7 +35,17 @@ import java.time.LocalDateTime;
     private String gender ;
     
     private String profileImageUrl ; // 사진
-    private String role ; //권한 
+    private String role ; //권한
+
+    // 1.mappedBy user , 나는 연관관계의 주인 아니다 ,주인을 Iamge 테이블의 user이다. 그러므로 테이블에 컬럼 만들지마 , 넣음
+    //2. User를 select 할때 해당 user id로 등록된 image들을 다 가져와 (Fetch 명시 x )
+    // // Fetch Lazy는 User select 하떄 해당 UserID로 등록된 image들을 가져오지마 - 대신 getImage 함수가 호출될때 image들가져와
+    // // Fetch Eager User select 하떄 해당 UserID로 등록된 image들을 전부 Join햇 가져와
+    // 한명의 유저는 여러 이미지 가능
+    @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
+    private List<Image> images ; // 양방향 매핑
+
+
     private LocalDateTime createDate ; // 만든 날짜
 
     @PrePersist // 디비에 자동으로 insert되기 직전 실행 

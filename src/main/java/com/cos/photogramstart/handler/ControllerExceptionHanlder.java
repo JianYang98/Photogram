@@ -1,6 +1,7 @@
 package com.cos.photogramstart.handler;
 
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -19,8 +20,22 @@ import java.util.Map;
 public class ControllerExceptionHanlder {
     @ExceptionHandler(CustomValidationException.class) // 런타임 입셉션을 예가 다!!! 리턴함
     public String ValidationException(CustomValidationException e){
-        return Script.back(e.getErrorMap().toString());
-        // 자바스크립트 리턴
+        System.out.println("==ValiddationExcepion 너  왔니 ");
+        if (e.getErrorMap() ==null){
+            return Script.back(e.getMessage()) ;
+        }else {
+            return Script.back(e.getErrorMap().toString());
+            // 자바스크립트 리턴
+        }
+
+    }
+    @ExceptionHandler(CustomException.class) //
+    public String Exception(CustomException e){
+            System.out.println("==CustomException 너  왔니 ");
+
+            return Script.back(e.getMessage()) ;
+
+
     }
     /*
      CRM 코드 , 메세지 , T에 맞춰서 넣음
@@ -37,7 +52,11 @@ public class ControllerExceptionHanlder {
     // 데이터 리턴
     @ExceptionHandler(CustomValidationApiException.class) // 런타임 입셉션을 예가 다!!! 리턴함
     public ResponseEntity<?> ValidationApiException(CustomValidationApiException e){
-        System.out.println("==========나실행해?===============================================================================");
+
+
+
+
+
 
         return new ResponseEntity<>( new CMRespDto<>(-1, e.getMessage(),e.getErrorMap()),HttpStatus.BAD_REQUEST);
         // AJAX 할때는 ResponseEntity 가 있어야 상태코드가 간다
@@ -58,4 +77,6 @@ public class ControllerExceptionHanlder {
         // AJAX 할때는 ResponseEntity 가 있어야 상태코드가 간다
         // Body와 상태코드 return , BadRequest 400
     }
+
+
 }
