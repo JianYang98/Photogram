@@ -22,7 +22,7 @@ public class UserController {
     @GetMapping("/user/{id}") // 경로가 /user/id !!
     public String profile(@PathVariable int id ,Model model){
         User userEntity = userService.회원프로필(id);
-        model.addAttribute("images" , userEntity) ;
+        model.addAttribute("user" , userEntity) ;
         return "user/profile" ;
     }
     @GetMapping("/user/{id}/update") // 경로가 /user/id !!
