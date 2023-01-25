@@ -28,7 +28,7 @@ public class UserController {
     @GetMapping("/user/{id}/update") // 경로가 /user/id !!
     public String update(@PathVariable int id , @AuthenticationPrincipal PrincipalDetails principalDetails , Model model){
         //1. 세션 정보 직접 접근
-        System.out.print("세션정보 ::  "+principalDetails.getUser());
+       // System.out.print("세션정보 ::  "+principalDetails.getUser());
 
         /*
         2.세션정보 하나하나 접근 ( 뇌절)

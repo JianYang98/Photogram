@@ -3,7 +3,9 @@ package com.cos.photogramstart.domain.user;
 //JPA  - JAVA Psersistence API(데이터를 영구적으로 저장 API)
 
 import com.cos.photogramstart.domain.Image.Image;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,8 +45,10 @@ import java.util.List;
     // // Fetch Eager User select 하떄 해당 UserID로 등록된 image들을 전부 Join햇 가져와
     // 한명의 유저는 여러 이미지 가능
     @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"user"}) // getter로 부를때 Image안에 user getter 호출 안되게 막음 
+    //JSONIgnore 안하면 JPA 무한 참고가 걸림 ,,,,, 절대 앙ㄷ댐
     private List<Image> images ; // 양방향 매핑
-
+    // IMage내에 있는 User를 JSON 파생되는거 막아야한다.
 
     private LocalDateTime createDate ; // 만든 날짜
 

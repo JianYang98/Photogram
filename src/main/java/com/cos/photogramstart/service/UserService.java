@@ -25,8 +25,7 @@ public class UserService {
             // 이거 에러시 alert 안뜸 이거 수정 바람
             throw new CustomException("해당 프로필 페이지는 없는 페이지 입니다") ;
         }) ;
-
-        System.out.println("==============");
+         System.out.println("==============");
         userEntity.getImages().get(0) ; // get 0번지 까지 // getImage가 호출되는 순간 select로 가져옴
         return userEntity ; // 유저 정보
 
