@@ -3,7 +3,9 @@ package com.cos.photogramstart.web;
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.service.UserService;
+import com.cos.photogramstart.web.dto.user.UserProfileDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.method.P;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,14 +17,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RequiredArgsConstructor
 @Controller
+@Slf4j
+
 public class UserController {
 
     private final UserService userService ;
 
-    @GetMapping("/user/{id}") // 경로가 /user/id !!
-    public String profile(@PathVariable int id ,Model model){
-        User userEntity = userService.회원프로필(id);
-        model.addAttribute("user" , userEntity) ;
+    @GetMapping("/user/{pageUserId}") // 경로가 /user/id !!
+    public String profile(@PathVariable int pageUserId ,Model model , @AuthenticationPrincipal PrincipalDetails principalDetails ){
+        //log.info("profile :: " , pageUserId ,   principalDetails.getUser().getId()    );
+        UserProfileDto dto = userService.회원프로필(pageUserId , principalDetails.getUser().getId()) ;
+        System.out.println(" page : " +pageUserId +" profile id :" + principalDetails.getUser().getId());
+
+        model.addAttribute("dto" , dto) ;
         return "user/profile" ;
     }
     @GetMapping("/user/{id}/update") // 경로가 /user/id !!
