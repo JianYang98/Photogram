@@ -1,5 +1,6 @@
 package com.cos.photogramstart.service;
 
+import com.cos.photogramstart.domain.subscribe.SubScribeRepository;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomException;
@@ -18,7 +19,7 @@ public class UserService {
 //test
     private  final BCryptPasswordEncoder bCryptPasswordEncoder ;
     private  final UserRepository userRepository ;
-
+    private  final SubScribeRepository subScribeRepository;
     //@Transactional(readOnly = true)
     public UserProfileDto 회원프로필 (int pageUserId ,int principalId) { // 해당페이지에
 
@@ -38,6 +39,11 @@ public class UserService {
 
         // 페이지 주인과 , 프린시펄 주인이 같으면 true 다르면 false
 
+        int subscribeState= subScribeRepository.mSubscribeState(principalId,pageUserId);
+        int subscribeCount = subScribeRepository.mSubscribeCount(pageUserId);
+
+        dto.setSubscribeState(subscribeState ==1);
+        dto.setSubscribeCount(subscribeCount);
 
         return dto ; // 유저 정보
 
