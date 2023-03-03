@@ -51,7 +51,7 @@ function toggleSubscribe(toUserId, obj) { //페이지userid받기
 
 // (2) 구독자 정보  모달 보기
 function subscribeInfoModalOpen() {
-	$(".modal-subscribe").css("display", "flex");
+	$(".modal-subscribe").css("display", "flex"); // modal-subscribe는 화면에 보여줌
 }
 
 function getSubscribeModalItem() {
