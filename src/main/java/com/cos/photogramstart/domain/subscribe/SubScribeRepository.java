@@ -14,10 +14,15 @@ public interface SubScribeRepository extends JpaRepository<Subscribe,Integer>  {
     @Query(value = "DELETE  FROM subscribe WHERE fromUserId = :fromUserId and toUserId =:toUserId",nativeQuery = true)
      void mUnSubscribe(int fromUserId , int toUserId);
 
-
+// 밑쿼리 다시 짜봄
+    /*
     @Query(value="SELECT COUNT(*) FROM subscribe WHERE fromUserId = :pageUserId AND toUserId = :principalId ",nativeQuery = true)  // select는 모디바이 필요없음
     int mSubscribeState(int principalId, int pageUserId); // 페이지 구독상태
+    */
+    @Query(value="SELECT COUNT(*) FROM subscribe WHERE fromUserId = :principalId AND toUserId = :pageUserId ",nativeQuery = true)  // select는 모디바이 필요없음
+    int mSubscribeState(int principalId, int pageUserId); // 페이지 구독상태
     @Query(value="SELECT COUNT(*) FROM subscribe WHERE fromUserId = :pageUserId",nativeQuery = true)
+
     int mSubscribeCount(int pageUserId); // 구독자수
 
 
