@@ -31,6 +31,7 @@ function storyLoad() {
 storyLoad();
 function getStoryItem(image) {
 	let item = '<div class="story-list__item">\n' +
+
 		'<div class="sl__item__header">\n' +
 		'<div>\n' +
 		'<img class="profile-image" src="/upload/'+ image.user.profileImageUrl+'"  \n' +
@@ -45,10 +46,17 @@ function getStoryItem(image) {
 		'\n' +
 		'<div class="sl__item__contents">\n' +
 		'<div class="sl__item__contents__icon">\n' +
-		'\n' +
-		'<button>\n' +
-		'<i class="fas fa-heart active" id="storyLikeIcon-'+ image.id+'" onclick="toggleLike('+ image.id+')"></i>\n' +
-		'</button>\n' +
+		'<button>\n' ;
+		if(image.likesState){ // 좋아요 액티브
+			item+= '<i class="fas fa-heart active" id="storyLikeIcon-'+ image.id+'" onclick="toggleLike('+ image.id+')"></i>\n' ;
+
+		}else{
+			item+= '<i class="fas fa-heart" id="storyLikeIcon-'+ image.id+'" onclick="toggleLike('+ image.id+')"></i>\n' ;
+
+
+		}
+
+ 		item +='</button>\n' +
 		'</div>\n' +
 		'\n' +
 		'<span class="like"><b id="storyLikeCount-1">3 </b>likes</span>\n' +
@@ -90,7 +98,7 @@ $(window).scroll(() => {
 	//console.log("윈도우 높이",$(window).height()) ;
 	let  checkNum = $(window).scrollTop() - ($(document).height()  -$(window).height() );
 	console.log(checkNum);
-	if(checkNum <1 && checkNum>-1){
+	if(checkNum <10 && checkNum>-10){
 		page++ ;
 		storyLoad();
 

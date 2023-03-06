@@ -33,6 +33,21 @@ public class ImageService {
     // 영속성 컨텍스트에서 변경감지를 해서 , 더티 체킹  , flush(반영) x
     public Page<Image> 이미지스토리(int princalId , Pageable pageable){
         Page<Image> images = imageRepository.mStory(princalId , pageable) ;
+
+        // 2번 cos 로그인 했을때 이미지를 들고와서  for로 들고와서 image에 좋아요 찾기
+        //내가 좋아한 정보인지 찾기
+        //image에 좋아요 상태 담기
+        images.forEach((image)->{
+            image.getLikes().forEach((likes) ->  {
+                if(likes.getUser().getId() == princalId){
+                    // 해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 한것인지 찾아
+                    // 해당 이미지를 좋아요 했다면  어카지
+                    image.setLikesState(true);
+                }
+            });
+
+        });
+
         return images;
     }
     public void 사진업로드(ImageUploadDto imageUploadDto , @AuthenticationPrincipal PrincipalDetails principalDetails){ // 이미지 업로드 Dto , 세션

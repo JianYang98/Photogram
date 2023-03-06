@@ -30,13 +30,16 @@ public class Likes { // N  여러좋아요는 하나에 이미지에 할 수 있
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
 
+    //무한 참조
     @JoinColumn(name="imageId")
     @ManyToOne
+
     private Image image ; // 1
 
 //    @JsonIgnoreProperties({"image"})
     @JoinColumn(name="userId")
     @ManyToOne
+    //무한 참조
     private User user ;
 
 
