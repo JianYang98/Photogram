@@ -9,10 +9,76 @@
 
 // (1) 스토리 로드하기
 function storyLoad() {
+	$.ajax({
+		url:'/api/image' ,
+		dataType:"json"
+	}).done(res=>{
+		console.log(res) ;
+
+		res.data.content.forEach((image)=>{ // image 갯수 만큼 // PAGE로 받아서 , content안에 있어
+			let stroyItem = getStoryItem(image) ;
+			$("#storyList").append(stroyItem);
+		});
+
+	}).fail(error =>{
+		console.log("에러" , error) ;
+
+	});
+
 
 }
-
-function getStoryItem() {
+storyLoad();
+function getStoryItem(image) {
+	let item = '<div class="story-list__item">\n' +
+		'<div class="sl__item__header">\n' +
+		'<div>\n' +
+		'<img class="profile-image" src="/upload/'+ image.user.profileImageUrl+'"  \n' +
+		'onerror="this.src=\'/images/person.jpeg\'" />\n' +
+		'</div>\n' +
+		'<div>'+image.user.username+'</div>\n' +
+		'</div>\n' +
+		'\n' +
+		'<div class="sl__item__img">\n' +
+		'<img src="/upload/'+image.postImageUrl+'" />\n' +
+		'</div>\n' +
+		'\n' +
+		'<div class="sl__item__contents">\n' +
+		'<div class="sl__item__contents__icon">\n' +
+		'\n' +
+		'<button>\n' +
+		'<i class="fas fa-heart active" id="storyLikeIcon-1" onclick="toggleLike()"></i>\n' +
+		'</button>\n' +
+		'</div>\n' +
+		'\n' +
+		'<span class="like"><b id="storyLikeCount-1">3 </b>likes</span>\n' +
+		'\n' +
+		'<div class="sl__item__contents__content">\n' +
+		'<p>'+ image.caption+'</p>\n' +
+		'</div>\n' +
+		'\n' +
+		'<div id="storyCommentList-1">\n' +
+		'\n' +
+		'<div class="sl__item__contents__comment" id="storyCommentItem-1"">\n' +
+		'<p>\n' +
+		'<b>Lovely :</b> 부럽습니다.\n' +
+		'</p>\n' +
+		'\n' +
+		'<button>\n' +
+		'<i class="fas fa-times"></i>\n' +
+		'</button>\n' +
+		'\n' +
+		'</div>\n' +
+		'\n' +
+		'</div>\n' +
+		'\n' +
+		'<div class="sl__item__input">\n' +
+		'<input type="text" placeholder="댓글 달기..." id="storyCommentInput-1" />\n' +
+		'<button type="button" onClick="addComment()">게시</button>\n' +
+		'</div>\n' +
+		'\n' +
+		'</div>\n' +
+		'</div>';
+	return item ;
 
 }
 
