@@ -47,7 +47,7 @@ function getStoryItem(image) {
 		'<div class="sl__item__contents__icon">\n' +
 		'\n' +
 		'<button>\n' +
-		'<i class="fas fa-heart active" id="storyLikeIcon-1" onclick="toggleLike()"></i>\n' +
+		'<i class="fas fa-heart active" id="storyLikeIcon-'+ image.id+'" onclick="toggleLike('+ image.id+')"></i>\n' +
 		'</button>\n' +
 		'</div>\n' +
 		'\n' +
@@ -99,8 +99,10 @@ $(window).scroll(() => {
 
 
 // (3) 좋아요, 안좋아요
-function toggleLike() {
-	let likeIcon = $("#storyLikeIcon-1");
+function toggleLike(imageId) {
+	let name ="storyLikeIcon-"+imageId ;
+	let likeIcon = $('#storyLikeIcon-${imageId}');  // '백팁 안에 $ 먹음
+	//let likeIcon = $('#'+name);  // '백팁 안에 $ 먹음
 	if (likeIcon.hasClass("far")) {
 		likeIcon.addClass("fas");
 		likeIcon.addClass("active");
