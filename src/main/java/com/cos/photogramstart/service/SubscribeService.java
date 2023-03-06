@@ -41,7 +41,7 @@ public class SubscribeService {
         Query query = em.createNativeQuery(sb.toString())
                 .setParameter(1,principalId)
                 .setParameter(2,principalId)
-                .setParameter(3,principalId) ;
+                .setParameter(3,pageUserId) ; // 페이지 주인 아이디
 
         //쿼리 실행 (qlrm 라이브러리 필룡 = Dto에 DB결과를 매핑하기 위하여 )
         JpaResultMapper result = new JpaResultMapper() ;

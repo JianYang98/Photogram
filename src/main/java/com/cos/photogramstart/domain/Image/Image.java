@@ -1,6 +1,7 @@
 package com.cos.photogramstart.domain.Image;
 
 import com.cos.photogramstart.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class Image { // N , 1 // N대 1의 관계임
     private  String caption ; // 글
     private  String postImageUrl ;
     // 1)사진을 전송받아서 그 사진을 서버 특정 폴더에 저장 2) DB 그 저장된 경로를 insert 할거임
-    @ManyToOne
+    @JsonIgnoreProperties({"images"}) // user 들고올때 images는 들고 오지 마라!
+    @ManyToOne(fetch = FetchType.EAGER) //  select 하면서 조인하고 user들고옴
     @JoinColumn(name = "userId")
     private User user ; // 1 , 1
 
