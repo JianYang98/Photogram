@@ -38,6 +38,9 @@ public class Image { // N , 1 // N대 1의 관계임
     @Transient // DB에 컬럼이 만들어 지지 않는다.
     private boolean likesState ;
 
+    @Transient // 조아요 갯수 DB 킬람 X
+    private int likeCount;
+
     // 댓글
 
 

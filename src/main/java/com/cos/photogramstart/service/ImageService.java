@@ -38,6 +38,9 @@ public class ImageService {
         //내가 좋아한 정보인지 찾기
         //image에 좋아요 상태 담기
         images.forEach((image)->{
+
+            image.setLikeCount((image.getLikes().size())); // 이미지에 라이크 카운트 정보 줍줍
+
             image.getLikes().forEach((likes) ->  {
                 if(likes.getUser().getId() == princalId){
                     // 해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 한것인지 찾아

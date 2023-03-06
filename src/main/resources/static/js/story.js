@@ -59,7 +59,7 @@ function getStoryItem(image) {
  		item +='</button>\n' +
 		'</div>\n' +
 		'\n' +
-		'<span class="like"><b id="storyLikeCount-1">3 </b>likes</span>\n' +
+		'<span class="like"><b id="storyLikeCount-'+image.id+'">'+image.likeCount+'</b>likes</span>\n' +
 		'\n' +
 		'<div class="sl__item__contents__content">\n' +
 		'<p>'+ image.caption+'</p>\n' +
@@ -98,7 +98,7 @@ $(window).scroll(() => {
 	//console.log("윈도우 높이",$(window).height()) ;
 	let  checkNum = $(window).scrollTop() - ($(document).height()  -$(window).height() );
 	console.log(checkNum);
-	if(checkNum <10 && checkNum>-10){
+	if(checkNum <1 && checkNum>-1){
 		page++ ;
 		storyLoad();
 
