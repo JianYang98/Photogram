@@ -45,6 +45,11 @@ public class UserService {
         dto.setSubscribeState(subscribeState ==1);
         dto.setSubscribeCount(subscribeCount);
 
+        //image count like  이미지에
+        userEntity.getImages().forEach((imege->{
+            imege.setLikeCount(imege.getLikes().size());
+        }));
+
         return dto ; // 유저 정보
 
     }

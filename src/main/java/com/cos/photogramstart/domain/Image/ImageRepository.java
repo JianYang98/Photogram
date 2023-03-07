@@ -13,5 +13,7 @@ public interface ImageRepository extends JpaRepository<Image,Integer> {
     Page<Image> mStory(int principalId, Pageable pageable);
     // 페이징 자동으로 됨 , 페이지 가져올때 3건씩 자동으로 가져옴
 
+    @Query(value="SELECT i.* FROM image i INNER JOIN (SELECT imageId , count(imageId) AS likesCount FROM likes GROUP BY imageId)c on i.id = c.imageId ORDER BY likesCount DESC" , nativeQuery = true)
+    List<Image> mPopular();
 
 }
