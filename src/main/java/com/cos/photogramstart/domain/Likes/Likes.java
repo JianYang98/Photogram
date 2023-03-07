@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Table(
         uniqueConstraints = { // 두개 복합 유니크시 할것
                 @UniqueConstraint(
-                        name = "likes_uk"  , // 모델명_네임
+                        name = "likes_uk"  , // 유니크 제약조건 이름모델명_네임
                         columnNames={"imageId" ,"userId"}  //칼럼명 적기
                         //어떤 이미지를 누가 좋아했나요?
                 )
@@ -33,14 +33,14 @@ public class Likes { // N  여러좋아요는 하나에 이미지에 할 수 있
     //무한 참조
     @JoinColumn(name="imageId")
     @ManyToOne
+    private Image image ; // 1  // 좋아요가 된 것이 어떤 이미지인가?
 
-    private Image image ; // 1
 
-//    @JsonIgnoreProperties({"image"})
+    // likes 안에 user안에 imagesd들을 못나오게 막는 중
+    @JsonIgnoreProperties({"images"}) // 유저를 들고 올때 images
     @JoinColumn(name="userId")
     @ManyToOne
-    //무한 참조
-    private User user ;
+    private User user ; //무한 참조 , 좋아요를 누가 한 것인가?
 
 
     private LocalDateTime createDate ; // 만든 날짜

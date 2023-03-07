@@ -11,9 +11,9 @@
 let page = 0; // 페이징을 위한
 function storyLoad() {
 	$.ajax({
-		type: "get" ,
+
 		url:'/api/image?page='+page ,
-		dataType:"json"
+		dataType:"json"  // 시 마퍼ㅏㅣ 허ㅡㅎㄹㅇㄹ하ㅣㅗㅜㅇ
 	}).done(res=>{
 		console.log(res) ;
 
@@ -21,6 +21,7 @@ function storyLoad() {
 		res.data.content.forEach((image)=>{ // image 갯수 만큼 // PAGE로 받아서 , content안에 있어
 			let stroyItem = getStoryItem(image) ;
 			$("#storyList").append(stroyItem);
+			console.log(stroyItem);
 		});
 
 	}).fail(error =>{
@@ -89,6 +90,7 @@ function getStoryItem(image) {
 		'\n' +
 		'</div>\n' +
 		'</div>';
+
 	return item ;
 
 }
