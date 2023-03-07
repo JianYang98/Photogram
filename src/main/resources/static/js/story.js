@@ -11,10 +11,12 @@
 let page = 0; // 페이징을 위한
 function storyLoad() {
 	$.ajax({
+		type: "get" ,
 		url:'/api/image?page='+page ,
 		dataType:"json"
 	}).done(res=>{
 		console.log(res) ;
+
 
 		res.data.content.forEach((image)=>{ // image 갯수 만큼 // PAGE로 받아서 , content안에 있어
 			let stroyItem = getStoryItem(image) ;
@@ -51,7 +53,7 @@ function getStoryItem(image) {
 			item+= '<i class="fas fa-heart active" id="storyLikeIcon-'+ image.id+'" onclick="toggleLike('+ image.id+')"></i>\n' ;
 
 		}else{
-			item+= '<i class="fas fa-heart" id="storyLikeIcon-'+ image.id+'" onclick="toggleLike('+ image.id+')"></i>\n' ;
+			item+= '<i class="far fa-heart" id="storyLikeIcon-'+ image.id+'" onclick="toggleLike('+ image.id+')"></i>\n' ;
 
 
 		}
@@ -109,16 +111,55 @@ $(window).scroll(() => {
 // (3) 좋아요, 안좋아요
 function toggleLike(imageId) {
 	let name ="storyLikeIcon-"+imageId ;
-	let likeIcon = $('#storyLikeIcon-${imageId}');  // '백팁 안에 $ 먹음
-	//let likeIcon = $('#'+name);  // '백팁 안에 $ 먹음
-	if (likeIcon.hasClass("far")) {
-		likeIcon.addClass("fas");
-		likeIcon.addClass("active");
-		likeIcon.removeClass("far");
-	} else {
-		likeIcon.removeClass("fas");
-		likeIcon.removeClass("active");
-		likeIcon.addClass("far");
+	//let likeIcon = $('#storyLikeIcon-${imageId}');  // '백팁 안에 $ 먹음
+	let likeIcon = $('#'+name);  // '백팁 안에 $ 먹음
+	if (likeIcon.hasClass("far")) {  // 좋아요 하겠다.
+		// 클래스가 far라는 것은 빈껍때기 , fas 빨간 하트임
+
+		$.ajax({
+			type:"post",
+			url:'api/image/'+imageId+'/likes',
+			dataType:"json"
+		}).done(res=>{
+
+			let likeCountStr = $('#storyLikeCount-'+imageId).text() ;
+			let likeCount = Number(likeCountStr) +1 ; // Number로 숫자 케스팅
+			console.log("좋아요 카운트",likeCount) ;
+			$('#storyLikeCount-'+imageId).text(likeCount) ; // text에 숫자 넣기
+
+
+			likeIcon.addClass("fas");
+			likeIcon.addClass("active");
+			likeIcon.removeClass("far");
+		}).fail(error =>{
+			console.log("오류",error) ;
+		});
+
+
+	} else { // 좋아요 취소 하겠다.
+
+		$.ajax({
+			type:"delete",
+			url:'api/image/'+imageId+'/likes',
+			dataType:"json"
+		}).done(res=>{
+			let likeCountStr = $('#storyLikeCount-'+imageId).text() ;
+			let likeCount = Number(likeCountStr) -1 ; // Number로 숫자 케스팅
+			console.log("좋아요 취소 후  카운트",likeCount) ;
+			$('#storyLikeCount-'+imageId).text(likeCount) ; // text에 숫자 넣기
+
+
+
+			likeIcon.removeClass("fas");
+			likeIcon.removeClass("active");
+			likeIcon.addClass("far");
+
+
+		}).fail(error =>{
+			console.log("오류",error) ;
+		});
+
+
 	}
 }
 
