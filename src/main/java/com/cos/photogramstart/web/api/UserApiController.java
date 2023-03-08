@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -35,6 +36,14 @@ public class UserApiController {
 
     private  final UserService userService ;
     private  final SubscribeService subscribeService ;  // di
+
+    @PutMapping("/api/user/{principalId}/profileImageUrl")
+    public ResponseEntity<?> profileImageUrlUpdate(@PathVariable int principalId , MultipartFile profileImageFile,@AuthenticationPrincipal PrincipalDetails principalDetails){
+        //MultipartFile의 변수 이름은 , 보내는 폼의 name값으로 해야 정확하게 매칭됨
+        User userEntity =userService.회원프로필사진변경(principalId,profileImageFile);
+        principalDetails.setUser(userEntity); // 세션에 사진 값 변경
+        return new ResponseEntity<>(new CMRespDto<>(1,"프로필사진변경성공",null),HttpStatus.OK) ;
+    }
 
     //구독자 정보를 위한 api
     @GetMapping("api/user/{pageUserId}/subsbcribe") // page주인을 따르고 있는 정보

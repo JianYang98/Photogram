@@ -116,7 +116,16 @@ function getSubscribeModalItem(u) {
 // }
 
 // (3) 유저 프로파일 사진 변경 (완)
-function profileImageUpload() {
+function profileImageUpload(  pageUserId , principalId) { // 되면 userProfileImageInput이 강제로 클릭이됨
+
+	console.log("pageId" ,pageUserId );
+	console.log("principalId" ,principalId );
+
+	if(pageUserId != principalId){
+		alert("프로필 사진을 수정할 수 없는 유저입니다. ")
+		return ; // 같지 않으면 밑코드 실행 X
+	}
+
 	$("#userProfileImageInput").click();
 
 	$("#userProfileImageInput").on("change", (e) => {
@@ -126,13 +135,39 @@ function profileImageUpload() {
 			alert("이미지를 등록해야 합니다.");
 			return;
 		}
+		//  userProfileIamgeForm 안에 있는 태그 전송 , 서버에 이미지 전송!!
+		let profileImageForm = $("#userProfileImageForm")[0];
+		console.log(profileImageForm) ;
 
-		// 사진 전송 성공시 이미지 변경
-		let reader = new FileReader();
-		reader.onload = (e) => {
-			$("#userProfileImage").attr("src", e.target.result);
-		}
-		reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+		//form데이터를 전송하려면 formData 객체로 받는다.
+		// FormData 객체를 이용하면 form 태그의 필드와 그 값을 나타내느 일련의 key/value 쌍을 담는다.
+		let formData = new FormData(profileImageForm) ;
+		$.ajax({
+			type:"put",
+			url:'/api/user/'+principalId+'/profileImageUrl',
+			data:formData,
+			contentType:false , // 필수 x-ww-form-urlencode 파싱되는 것 방지
+			processData:false ,// 필수 contentType을 false 줬을때 쿼리 스트링으로 가는 거 방지
+			enctype:"multipart/form-data", // form태그에 enctype넣거나 여기에 넣거나
+			dataType:"json"
+
+		}).done(res =>{
+			console.log("ajax 성공!") ;
+			// 사진 전송 성공시 이미지 변경
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				$("#userProfileImage").attr("src", e.target.result);
+
+			}
+			reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
+
+		}).fail(error=>{
+			console.log("오류입니다.",error) ;
+
+		});
+
+
+
 	});
 }
 

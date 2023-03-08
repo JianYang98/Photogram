@@ -3,7 +3,7 @@
 	
 	<%@ include file="../layout/header.jsp" %>
 
-    <!--사진 업로드페이지 중앙배치-->
+         <!--사진 업로드페이지 중앙배치-->
         <main class="uploadContainer">
            <!--사진업로드 박스-->
             <section class="upload">

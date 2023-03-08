@@ -3,6 +3,7 @@ function update(userId , event) {
     event.preventDefault() // 폼태크 액션을 막기
     console.log(userId) ;
     let data =$("#profileUpdate").serialize() ;
+    //serialize은 데이터를 key, value 형태로 가져온다.
     console.log(data) ;
 
     $.ajax({
