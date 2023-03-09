@@ -21,7 +21,7 @@ function storyLoad() {
 		res.data.content.forEach((image)=>{ // image 갯수 만큼 // PAGE로 받아서 , content안에 있어
 			let stroyItem = getStoryItem(image) ;
 			$("#storyList").append(stroyItem);
-			console.log(stroyItem);
+			//console.log(stroyItem);
 		});
 
 	}).fail(error =>{
@@ -68,7 +68,7 @@ function getStoryItem(image) {
 		'<p>'+ image.caption+'</p>\n' +
 		'</div>\n' +
 		'\n' +
-		'<div id="storyCommentList-1">\n' +
+		'<div id="storyCommentList-'+image.id+'">\n' +
 		'\n' +
 		'<div class="sl__item__contents__comment" id="storyCommentItem-1"">\n' +
 		'<p>\n' +
@@ -84,8 +84,8 @@ function getStoryItem(image) {
 		'</div>\n' +
 		'\n' +
 		'<div class="sl__item__input">\n' +
-		'<input type="text" placeholder="댓글 달기..." id="storyCommentInput-1" />\n' +
-		'<button type="button" onClick="addComment()">게시</button>\n' +
+		'<input type="text" placeholder="댓글 달기..." id="storyCommentInput-'+image.id+'" />\n' +
+		'<button type="button" onClick="addComment('+image.id +')">게시</button>\n' +
 		'</div>\n' +
 		'\n' +
 		'</div>\n' +
@@ -101,7 +101,7 @@ $(window).scroll(() => {
 	//console.log("문서의 높이",$(document).height()) ;
 	//console.log("윈도우 높이",$(window).height()) ;
 	let  checkNum = $(window).scrollTop() - ($(document).height()  -$(window).height() );
-	console.log(checkNum);
+	//console.log(checkNum);
 	if(checkNum <1 && checkNum>-1){
 		page++ ;
 		storyLoad();
@@ -166,20 +166,39 @@ function toggleLike(imageId) {
 }
 
 // (4) 댓글쓰기
-function addComment() {
+function addComment(ImageId) {
 
-	let commentInput = $("#storyCommentInput-1");
-	let commentList = $("#storyCommentList-1");
+	let commentInput = $('#storyCommentInput-'+ImageId);
+	let commentList = $('#storyCommentList-'+ImageId);
 
-	let data = {
+	let data ={
+		imageId: ImageId , // 이미지 아이디
 		content: commentInput.val()
 	}
+	//console.log("첫번째 ",data);
+	//console.log("두번쨰",JSON.stringify(data)); 통신하기위해 바꿔감
+
+
 
 	if (data.content === "") {
 		alert("댓글을 작성해주세요!");
 		return;
 	}
 
+	$.ajax({
+		type: 'post',
+		url: '/api/comment',
+		data:JSON.stringify(data) , //자바스크립트 data를 날림
+		contentType:"application/json;charset=utf-8" ,
+		dataType:"json"
+
+	}).done(res=>{
+		console.log("성공" , res) ;
+
+	}).fail(error=>{
+		console.log("실패" , error) ;
+
+	});
 	let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
 			    <p>
