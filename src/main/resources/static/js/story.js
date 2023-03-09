@@ -68,21 +68,24 @@ function getStoryItem(image) {
 		'<p>'+ image.caption+'</p>\n' +
 		'</div>\n' +
 		'\n' +
-		'<div id="storyCommentList-'+image.id+'">\n' +
-		'\n' +
-		'<div class="sl__item__contents__comment" id="storyCommentItem-1"">\n' +
-		'<p>\n' +
-		'<b>Lovely :</b> 부럽습니다.\n' +
-		'</p>\n' +
-		'\n' +
-		'<button>\n' +
-		'<i class="fas fa-times"></i>\n' +
-		'</button>\n' +
-		'\n' +
+		'<div id="storyCommentList-'+image.id+'">\n' ;
+
+		image.comments.forEach((comment)=>{
+			item+=
+			`<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
+			<p>
+				<b>${comment.user.username}:</b> ${comment.content}</p>  
+			 </p>
+			 <button> <i class="fas fa-times"></i>
+			</button>
+			</div>
+		`;
+
+		});
+
+		
+		item +=
 		'</div>\n' +
-		'\n' +
-		'</div>\n' +
-		'\n' +
 		'<div class="sl__item__input">\n' +
 		'<input type="text" placeholder="댓글 달기..." id="storyCommentInput-'+image.id+'" />\n' +
 		'<button type="button" onClick="addComment('+image.id +')">게시</button>\n' +
@@ -195,21 +198,25 @@ function addComment(ImageId) {
 	}).done(res=>{
 		console.log("성공" , res) ;
 
+		let comment =res.data ;
+		let content = `
+			  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
+			    <p>
+			      <b>${comment.user.username}</b>
+			   		${comment.content}
+			    </p>
+			    <button><i class="fas fa-times"></i></button>
+			  </div>
+			`;
+		commentList.prepend(content);
+
 	}).fail(error=>{
 		console.log("실패" , error) ;
 
 	});
-	let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
-			    <p>
-			      <b>GilDong :</b>
-			      댓글 샘플입니다.
-			    </p>
-			    <button><i class="fas fa-times"></i></button>
-			  </div>
-	`;
-	commentList.prepend(content);
-	commentInput.val("");
+	commentInput.val(""); // 인풋 필드 깨끗하게 비워줌
+
+
 }
 
 // (5) 댓글 삭제

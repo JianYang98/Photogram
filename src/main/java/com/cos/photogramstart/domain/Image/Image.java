@@ -1,6 +1,7 @@
 package com.cos.photogramstart.domain.Image;
 
 import com.cos.photogramstart.domain.Likes.Likes;
+import com.cos.photogramstart.domain.comment.Comment;
 import com.cos.photogramstart.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -41,7 +42,11 @@ public class Image { // N , 1 // N대 1의 관계임
     @Transient // 조아요 갯수 DB 킬람 X
     private int likeCount;
 
-    // 댓글
+    // 댓글 Lazy로딩
+    @OrderBy("id DESC")
+    @JsonIgnoreProperties({"image"}) // comment내부에서 image가져오지맘!
+    @OneToMany(mappedBy = "image") //comment안에 이미지 //연관관계의 주인이 아닙니다. //FK 변수를 mappedBy에 적어둠
+    private List<Comment> comments ;  // 하나에 이미지에 여러개의 코맨트 쌉가능 
 
 
     private LocalDateTime createDate ; // 만든 날짜

@@ -2,6 +2,7 @@ package com.cos.photogramstart.domain.comment;
 
 import com.cos.photogramstart.domain.Image.Image;
 import com.cos.photogramstart.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +24,13 @@ public class Comment {
     @Column(length = 100 , nullable = false)
     private String  content;// 댓글
 
-
+    @JsonIgnoreProperties({"images"})
     @JoinColumn(name="userId")
     @ManyToOne(fetch = FetchType.EAGER)
     private User  user ; // 누가 쓴 댓글 // 한명에 유저는 댓글을여러개 쓸수 있따 N:1
 
-    @JoinColumn(name="c")
+
+    @JoinColumn(name="imageId")
     @ManyToOne(fetch = FetchType.EAGER)
     private Image image ; // 어떤 이미지에 // 하나에 이미지에 여러 댓글이 달려 N:1
 //패치 전략 셀력트 할때 여러개 오면 LAZY로 셀렉트시 여러개 와? EAGER
