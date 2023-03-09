@@ -29,7 +29,7 @@ function storyLoad() {
 		});
 
 	}).fail(error =>{
-		console.log("에러" , error) ;
+		console.log("에러" ) ;
 
 	});
 
@@ -217,7 +217,9 @@ function addComment(ImageId) {
 		commentList.prepend(content);
 
 	}).fail(error=>{
-		console.log("실패" , error) ;
+		//console.log("실패" ,  error.responseJSON.message) ;
+		console.log(  ) ;
+		alert( error.responseJSON.data.content );
 
 	});
 	commentInput.val(""); // 인풋 필드 깨끗하게 비워줌
