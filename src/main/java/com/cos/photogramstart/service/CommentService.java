@@ -52,7 +52,15 @@ public class CommentService {
         return commentRepository.save(comment) ;
     }
     @Transactional
-    public void 댓글삭제 (){
+    public void 댓글삭제 (int id){
+        // 터지면  다 thy- cath로 걸기
+        try{
+            commentRepository.deleteById(id);
+        }catch (Exception e){
+            throw new CustomApiException(e.getMessage());
+            // CustomException은 html을 리턴
+            // CustomApiException은 메시지 리턴
+        }
 
     }
 
