@@ -20,3 +20,8 @@
 - Lombok
 - Springboot JPA
 - Springboot Security
+
+
+### 데이터 ERD
+
+ ![img_1.png](img_1.png)
