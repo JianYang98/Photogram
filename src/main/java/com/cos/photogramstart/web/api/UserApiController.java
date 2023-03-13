@@ -62,26 +62,25 @@ public class UserApiController {
             @Valid UserUpdateDto userupdateDto,
             BindingResult bindingResult , // @Vaild가 꼭 적혀있는 다음 파라메타에 적어야함
             @AuthenticationPrincipal PrincipalDetails principalDetails){
-
+/*
             if(bindingResult.hasErrors()){ // 만약 벨레이드션 체크에서 위배되면 에러됨
                 Map<String,String> errorMap = new HashMap<>();
                 for(FieldError error : bindingResult.getFieldErrors()){
                     // bindingResult 에러값을 체크해서 error로 받아서 errorMap에 넣음
                     errorMap.put(error.getField() , error.getDefaultMessage()); // 에러 메세지랑 필드 넣어줌
-                    System.out.println("==========");
-                    System.out.println(error.getDefaultMessage()) ;
-                    System.out.println("==========");
-                }
+                     System.out.println(error.getDefaultMessage()) ;
+                 }
                 //
                 throw new CustomValidationApiException("유효성 검사 실패함" ,errorMap ) ;
             }else{
+*/
                 log.info("여기왔니  user  resAPI" ,userupdateDto) ;
                 User userEntity =userService.회원수정(id,userupdateDto.toEntity()) ;
                 principalDetails.setUser(userEntity); //  세션 정보 변경
                 return new CMRespDto<>(1,"회원수정완료",userEntity);
                 // 응답시에 userEntity의 모든 getter 함수가 호출되고 , JSON으로 파싱하여 응답
                 //
-            }
+
 
     }
 

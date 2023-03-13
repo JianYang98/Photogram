@@ -23,7 +23,8 @@ import java.util.List;
     //번호 증가 전략이 데이터비으스를 따라감
     private int id ;
     //정말 집에 가고 싶어
-    @Column(length = 20,unique = true) // 유니크키 걸음
+    @Column(length = 100,unique = true) // 유니크키 걸음
+    // OAuth2로그인을 위해 칼럼 늘리기
     private String username ;
     @Column(nullable = false) // 널부가
     private String password ;
@@ -55,5 +56,23 @@ import java.util.List;
     @PrePersist // 디비에 자동으로 insert되기 직전 실행 
     public void createDate(){
         this.createDate = LocalDateTime.now() ;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", website='" + website + '\'' +
+                ", bio='" + bio + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender='" + gender + '\'' +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", role='" + role + '\'' +
+                ", createDate=" + createDate +
+                '}';
     }
 }

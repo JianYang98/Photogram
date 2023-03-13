@@ -51,8 +51,8 @@ public class AuthController {
     //회원 가입 진행 ->/auth/signup -> /auth/signin
     @PostMapping("/auth/signup") //ResponseBody 붙어있으면 데이터 응답함
     public   String signUp(@Valid  SignupDto signupDto , BindingResult bindingResult) {
-        log.info("오기는 옴 ");
         //Valid 체크 해줌 BindingResult가  valid 체크함
+ /*
         if(bindingResult.hasErrors()){ // 만약 벨레이드션 체크에서 위배되면 에러됨
             Map<String,String> errorMap = new HashMap<>();
             for(FieldError error : bindingResult.getFieldErrors()){
@@ -61,21 +61,17 @@ public class AuthController {
                 System.out.println("==========");
                 System.out.println(error.getDefaultMessage()) ;
                 System.out.println("==========");
-
-
-
             }
             // DTO가 Valid션 체크에서 위배되면 바로!!! bindingResult에.hasError가 걸리면 , 커스텀 입셉션으ㅗㄹ 떨림
             throw new CustomValidationException("유효성 검사 실패함" ,errorMap ) ;
         }else {
 
-
-            log.info(signupDto.toString());
+*/
             User user = signupDto.toEntity(); // siguDto를 바로 toEntity
             log.info(user.toString());
             User userEntity = authService.회원가입(user) ;
             //System.out.println(userEntity);
-        }
+
 
 
         return "auth/signin";

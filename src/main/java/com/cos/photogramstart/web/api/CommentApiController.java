@@ -30,7 +30,7 @@ public class CommentApiController {
         //RequestBody 제이쓴 데이터 받기
         //System.out.println(commentDto);
 
-
+/*
         if(bindingResult.hasErrors()){ // 만약 벨레이드션 체크에서 위배되면 에러됨
             Map<String,String> errorMap = new HashMap<>();
             for(FieldError error : bindingResult.getFieldErrors()){
@@ -43,8 +43,7 @@ public class CommentApiController {
             //
             throw new CustomValidationApiException("유효성 검사 실패함" ,errorMap ) ;
         }
-
-
+*/
         Comment comment = commentService.댓글쓰기(commentDto.getContent(), commentDto.getImageId(),principalDetails.getUser().getId()) ;
         return  new ResponseEntity<>(new CMRespDto<>(1,"댓글쓰기 성공",comment), HttpStatus.CREATED) ;
     }
