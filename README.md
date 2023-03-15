@@ -2,7 +2,9 @@
 
 
 ### Springboot + JPA를 이용한 SNS 웹사이트 프로젝트
-#
+
+###[데어프로그래밍] 스프링부트 SNS프로젝트 - 포토그램 만들기 인강참고
+https://easyupclass.e-itwill.com/course/course_view.jsp?id=27&rtype=0&ch=course
 
 ### 프로젝트 소개
 - AOP를 활용한 유효성 검사 자동화
